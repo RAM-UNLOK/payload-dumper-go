@@ -29,13 +29,13 @@ jobs:
 
   goreleaser:
     runs-on: ubuntu-latest
-    container: fedora:40
+    container: fedora:34
     needs: macos-sdk
 
     steps:
       - name: Install dependencies
         run: |
-          dnf -y install autoconf bash clang cmake gettext-devel git glibc-{devel,static}.{i686,x86_64} golang libstdc++-static libtool libuuid-devel libxml2-devel llvm-devel make mingw{32,64}-{winpthreads,xz-libs}-static mingw{32,64}-gcc{-c++,} openssl-devel patch po4a xz-{devel,static}.{i686,x86_64}
+          dnf -y install autoconf bash clang cmake gettext-devel git glibc-{devel,static}.{i686,x86_64} golang libstdc++-static libtool libuuid-devel libxml2-devel llvm-devel make mingw{32,64}-{winpthreads,xz-libs}-static mingw{32,64}-gcc{-c++,} openssl-devel patch po4a xz-{devel,static}.{i686,x86_64} libgnat*
           dnf -y install 'dnf-command(download)'
           dnf download --source xz-devel
           rpm -ivh *.src.rpm
@@ -48,7 +48,7 @@ jobs:
           CFLAGS: -fPIC
         run: |
           dnf -y copr enable lantw44/arm-linux-gnueabihf-toolchain
-          dnf -y install arm-linux-gnueabihf-{binutils,gcc,glibc}
+          dnf -y install arm-linux-gnueabihf-{binutils,gcc,glibc} libgnat
           mkdir /linux-armv7-buildroot
           pushd /linux-armv7-buildroot
           tar -xvf $HOME/rpmbuild/SOURCES/xz-*.tar.xz
@@ -65,7 +65,7 @@ jobs:
           CXX: aarch64-linux-gnu-c++
         run: |
           dnf -y copr enable lantw44/aarch64-linux-gnu-toolchain
-          dnf -y install aarch64-linux-gnu-{binutils,gcc,glibc}
+          dnf -y install aarch64-linux-gnu-{binutils,gcc,glibc} libgnat
           mkdir /linux-aarch64-buildroot
           pushd /linux-aarch64-buildroot
           tar -xvf $HOME/rpmbuild/SOURCES/xz-*.tar.xz
@@ -97,7 +97,7 @@ jobs:
 
       - name: Build osxcross
         if: steps.osxcross-target.outputs.cache-hit != 'true'
-        run: UNATTENDED=1 ./build.sh
+        run: UNATTENDED=1 SDK_VERSION=14 ./build.sh 
         working-directory: /osxcross
 
       - name: Setup cross compile environment for Darwin AMD64
