@@ -18,7 +18,7 @@ jobs:
         run: |
           git clone https://github.com/tpoechtrager/osxcross osxcross
           pushd osxcross
-          XCODEDIR=/Applications/Xcode_12.4.app tools/gen_sdk_package.sh
+          XCODEDIR=/Applications/Xcode_15.4.app tools/gen_sdk_package.sh
           mv MacOSX*.sdk.tar.xz tarballs/
           popd
 
