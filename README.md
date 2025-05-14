@@ -19,7 +19,7 @@ See how fast payload-dumper-go is: https://imgur.com/a/X6HKJT4. (MacBook Pro 16-
 
 ### Limitations
 
-- Incremental OTA (delta) payload is not supported yet. ([#44](https://github.com/ssut/payload-dumper-go/pull/44))
+- Incremental OTA (delta) payload is not fully tested and probably broken.
 
 ## Installation
 
@@ -155,6 +155,20 @@ As you can see, the pure Go implementation is about 6~ times slower than the C i
 ## Sources
 
 https://android.googlesource.com/platform/system/update_engine/+/master/update_metadata.proto
+
+## Compilation
+
+### Linux and OSX
+```
+git submodule update --init --recursive
+go generate chromeos_update_engine/update_engine.go 
+go build .
+```
+
+### Windows
+
+#### TODO
+
 
 ## License
 

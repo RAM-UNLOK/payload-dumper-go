@@ -36,9 +36,12 @@ go.work.sum
 
 # End of https://www.toptal.com/developers/gitignore/api/go,vscode
 
+chromeos_update_engine/build/
 *.zip
-**/payload.bin
-
+**/payload*.bin
+payload-dumper-go
 extracted_*/
+*.img
+
 
 .DS_Store
